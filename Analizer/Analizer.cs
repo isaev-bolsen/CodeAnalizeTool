@@ -13,23 +13,32 @@ namespace Analizer
         {
             this.assembleys = assembleys;
         }
-
-        public MyTypeInfo GetHierarhy(string v)
-        {
-            throw new NotImplementedException();
-        }
-
         public Analizer(Assembly assembley) : this(new Assembly[] { assembley }) { }
 
         public Type GetRootForHierarhy(string ClassName)
         {
-            return GetRootForHierarhy(assembleys.Select(a => a.GetType(ClassName)).Single());
+            return GetRootForHierarhy(SearchForType(ClassName));
+        }
+
+        private Type SearchForType(string ClassName)
+        {
+            return assembleys.Select(a => a.GetType(ClassName)).Single();
         }
 
         public Type GetRootForHierarhy(Type type)
         {
             if (type == typeof(object) || type.BaseType == typeof(object)) return type;
             else return GetRootForHierarhy(type.BaseType);
+        }
+
+        public MyTypeInfo GetHierarhy(string ClassName)
+        {
+            return GetHierarhy(SearchForType(ClassName));
+        }
+
+        public MyTypeInfo GetHierarhy(Type type)
+        {
+            return new MyTypeInfo(GetRootForHierarhy(type), assembleys.SelectMany(a => a.GetTypes()));
         }
     }
 }
