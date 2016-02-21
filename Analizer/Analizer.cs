@@ -14,6 +14,11 @@ namespace Analizer
             this.assembleys = assembleys;
         }
 
+        public MyTypeInfo GetHierarhy(string v)
+        {
+            throw new NotImplementedException();
+        }
+
         public Analizer(Assembly assembley) : this(new Assembly[] { assembley }) { }
 
         public Type GetRootForHierarhy(string ClassName)
