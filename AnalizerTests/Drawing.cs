@@ -25,5 +25,12 @@ namespace AnalizerTests
             drawer.Draw(new Analizer.Analizer(this.GetType().Assembly).GetHierarhy("AnalizerTests.SimpleHierarhyRoot"));
             Assert.AreEqual(2, canvas.Children.OfType<TextBox>().Count());
         }
+
+        [TestMethod]
+        public void DrawMoreComplexHierarhy()
+        {
+            drawer.Draw(new Analizer.Analizer(this.GetType().Assembly).GetHierarhy("AnalizerTests.MoreComplexHierarhyRoot"));
+            Assert.AreEqual(7, canvas.Children.OfType<TextBox>().Count());
+        }
     }
 }
