@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.IO;
 using Microsoft.Win32;
 using System.Reflection;
+using Analizer;
 
 namespace HierarhyDrawer
 {
@@ -23,7 +24,7 @@ namespace HierarhyDrawer
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<Assembly> Assembleys = new List<Assembly>();
+        private HashSet<Assembly> Assembleys = new HashSet<Assembly>();
         private OpenFileDialog OpenFileDialog = new OpenFileDialog() { Multiselect = true, Filter = ".Net assembleys|*.dll; *.exe", CheckFileExists = true };
         public MainWindow()
         {
@@ -46,7 +47,7 @@ namespace HierarhyDrawer
 
         private void Draw(object sender, RoutedEventArgs e)
         {
-            Analizer.MyTypeInfo root;
+            MyTypeInfo root;
             if (string.IsNullOrEmpty(ClassName.Text)) return;
 
             try
@@ -58,6 +59,19 @@ namespace HierarhyDrawer
                 MessageBox.Show(this, exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+
+            Draw(root, Canvas);
+        }
+
+        private static UIElement GetClassRepresentation(MyTypeInfo typeInfo)
+        {
+            var res = new TextBlock() { Text = typeInfo.Type.FullName };
+            return res;
+        }
+
+        private static void Draw(MyTypeInfo root, Canvas canvas)
+        {
+            canvas.Children.Add(GetClassRepresentation(root));
         }
     }
 }
