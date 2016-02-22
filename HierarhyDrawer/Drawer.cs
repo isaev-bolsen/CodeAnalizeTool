@@ -6,7 +6,7 @@ using System.Windows.Controls;
 
 namespace HierarhyDrawer
 {
-    internal class Drawer
+    public class Drawer
     {
         private Canvas Canvas;
 

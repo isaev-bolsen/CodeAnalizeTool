@@ -35,7 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Windows.Controls.Ribbon" />
+    <Reference Include="System.Xaml" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -45,11 +48,14 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Drawing.cs" />
     <Compile Include="GetHierarhyTests.cs" />
     <Compile Include="MoreComplexHierarhy.cs" />
     <Compile Include="RootTests.cs" />
@@ -60,6 +66,10 @@
     <ProjectReference Include="..\Analizer\Analizer.csproj">
       <Project>{e29c7ad8-bb86-442e-97d1-cb9e815ef4e5}</Project>
       <Name>Analizer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HierarhyDrawer\HierarhyDrawer.csproj">
+      <Project>{1bcf7dfb-2216-49c8-9b39-9fdd419fd476}</Project>
+      <Name>HierarhyDrawer</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
