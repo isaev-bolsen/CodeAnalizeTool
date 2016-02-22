@@ -23,7 +23,7 @@ namespace Analizer
 
         private Type SearchForType(string ClassName)
         {
-            Type res = assembleys.Select(a => a.GetType(ClassName)).Single();
+            Type res = assembleys.Select(a => a.GetType(ClassName)).First();
             if (res == null) throw new ArgumentException("Class not found. Use valid Full Class name");
             return res;
         }
