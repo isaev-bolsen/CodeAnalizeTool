@@ -8,12 +8,12 @@ namespace HierarhyDrawer
 {
     public class Drawer
     {
-        private Canvas Canvas;
+        private Canvas canvas;
 
-       public Drawer (Canvas canvas)
+        public Drawer(Canvas canvas)
         {
-            Canvas = canvas;
-            Canvas.Children.Clear();
+            this.canvas = canvas;
+            this.canvas.Children.Clear();
         }
 
         protected virtual UIElement GetNodeRepresentation(MyTypeInfo typeInfo)
@@ -24,13 +24,18 @@ namespace HierarhyDrawer
         public void Draw(MyTypeInfo root)
         {
             UIElement UIroot = GetNodeRepresentation(root);
-            Canvas.Children.Add(UIroot);
+            canvas.Children.Add(UIroot);
             Draw(UIroot, root.Children);
         }
 
         private void Draw(UIElement Parent, IEnumerable<MyTypeInfo> Children)
         {
-            IEnumerable<UIElement> CildElemnts = Children.Select(N => GetNodeRepresentation(N));
+            IEnumerable<UIElement> ChildElemnts = Children.Select(N => GetNodeRepresentation(N));
+            foreach (UIElement elt in ChildElemnts)
+            {
+                canvas.Children.Add(elt);
+                Canvas.SetTop(elt, 30);
+            }
         }
     }
 }
