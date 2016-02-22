@@ -18,8 +18,8 @@ namespace TreeDrawer
             public UIElement payload;
         }
 
-        public double stepY = 40;
-        public double stepX = 100;
+        public double stepY = 50;
+        public double stepX = 50;
 
         public double Width { get; private set; }
 
@@ -82,17 +82,18 @@ namespace TreeDrawer
                     if (fEl != null) fEl.SizeChanged += SetX;
                 }
         }
-        
+
         private void SetX(object sender, RoutedEventArgs e)
         {
             Width = Levels.Select(level => level.Select(n => n.payload.DesiredSize.Width).Sum() + (level.Count - 1) * stepX).Max();
             foreach (var level in Levels) SetX(level);
+            canvas.UpdateLayout();
         }
 
         private void SetX(List<Node> level)
         {
-            for (int i = 0; i < level.Count; ++i) level[i].XPosition = Width / level.Count * i;
-            foreach (var element in level) Canvas.SetLeft(element.payload, element.XPosition + stepX);
+            for (int i = 0; i < level.Count; ++i) level[i].XPosition = Width / level.Count * (i + 0.5);
+            foreach (var element in level) Canvas.SetLeft(element.payload, element.XPosition);
         }
     }
 }
