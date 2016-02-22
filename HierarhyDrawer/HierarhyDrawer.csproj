@@ -101,6 +101,10 @@
       <Project>{e29c7ad8-bb86-442e-97d1-cb9e815ef4e5}</Project>
       <Name>Analizer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TreeDrawer\TreeDrawer.csproj">
+      <Project>{fd680cf7-3fd4-468f-a43c-0da77c869f9c}</Project>
+      <Name>TreeDrawer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
