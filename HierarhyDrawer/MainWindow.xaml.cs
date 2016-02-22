@@ -1,21 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.IO;
+﻿using Analizer;
 using Microsoft.Win32;
+using System;
+using System.Collections.Generic;
 using System.Reflection;
-using Analizer;
+using System.Windows;
+using System.Windows.Input;
 
 namespace HierarhyDrawer
 {
@@ -26,9 +15,12 @@ namespace HierarhyDrawer
     {
         private HashSet<Assembly> Assembleys = new HashSet<Assembly>();
         private OpenFileDialog OpenFileDialog = new OpenFileDialog() { Multiselect = true, Filter = ".Net assembleys|*.dll; *.exe", CheckFileExists = true };
+        private Drawer Drawer;
+
         public MainWindow()
         {
             InitializeComponent();
+            Drawer = new Drawer(Canvas);
         }
 
         private void SelectAssembleys(object sender, RoutedEventArgs e)
@@ -65,25 +57,7 @@ namespace HierarhyDrawer
                 return;
             }
 
-            Draw(root);
-        }
-
-        private static UIElement GetClassRepresentation(MyTypeInfo typeInfo)
-        {
-            return new TextBox() { Text = typeInfo.Type.FullName, IsReadOnly = true, Height = 25 };
-        }
-
-        private void Draw(MyTypeInfo root)
-        {
-            UIElement UIroot = GetClassRepresentation(root);
-            Canvas.Children.Add(UIroot);
-            Draw(UIroot, root.Children);
-        }
-
-        private void Draw(UIElement Parent, IEnumerable<MyTypeInfo> Children)
-        {
-            IEnumerable<UIElement> CildElemnts = Children.Select(N => GetClassRepresentation(N));
-
+            Drawer.Draw(root);
         }
     }
 }
