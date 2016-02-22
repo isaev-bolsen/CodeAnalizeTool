@@ -79,12 +79,11 @@ namespace TreeDrawer
                     canvas.Children.Add(element.payload);
                     Canvas.SetTop(element.payload, element.YPosition);
                     FrameworkElement fEl = element.payload as FrameworkElement;
-                    if (fEl != null) fEl.SizeChanged += FEl_SizeChanged;
+                    if (fEl != null) fEl.SizeChanged += SetX;
                 }
         }
         
-
-        private void FEl_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void SetX(object sender, RoutedEventArgs e)
         {
             Width = Levels.Select(level => level.Select(n => n.payload.DesiredSize.Width).Sum() + (level.Count - 1) * stepX).Max();
             foreach (var level in Levels) SetX(level);
