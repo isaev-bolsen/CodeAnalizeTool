@@ -16,21 +16,21 @@ namespace HierarhyDrawer
             Canvas.Children.Clear();
         }
 
-        private static UIElement GetClassRepresentation(MyTypeInfo typeInfo)
+        protected virtual UIElement GetNodeRepresentation(MyTypeInfo typeInfo)
         {
             return new TextBox() { Text = typeInfo.Type.FullName, IsReadOnly = true, Height = 25 };
         }
 
         public void Draw(MyTypeInfo root)
         {
-            UIElement UIroot = GetClassRepresentation(root);
+            UIElement UIroot = GetNodeRepresentation(root);
             Canvas.Children.Add(UIroot);
             Draw(UIroot, root.Children);
         }
 
         private void Draw(UIElement Parent, IEnumerable<MyTypeInfo> Children)
         {
-            IEnumerable<UIElement> CildElemnts = Children.Select(N => GetClassRepresentation(N));
+            IEnumerable<UIElement> CildElemnts = Children.Select(N => GetNodeRepresentation(N));
         }
     }
 }
