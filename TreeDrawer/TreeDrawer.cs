@@ -18,8 +18,8 @@ namespace TreeDrawer
             public UIElement payload;
         }
 
-        public double stepY = 20;
-
+        public double stepY = 40;
+        public double stepX = 100;
         List<List<Node>> Levels = new List<List<Node>>();
 
         private Canvas canvas;
@@ -47,7 +47,7 @@ namespace TreeDrawer
         {
             return getChildren(parent.element).Select(e =>
             {
-                var childnode = new Node { element = e, Parent = parent, level = level, payload = getPayLoad(e) };
+                var childnode = new Node { element = e, Parent = parent, level = level, payload = getPayLoad(e), YPosition = level * stepY };
                 parent.Children.Add(childnode);
                 return childnode;
             }).ToList();
@@ -71,7 +71,20 @@ namespace TreeDrawer
             } while (Levels[currentLevel].Count > 0);
 
             foreach (var level in Levels)
-                foreach (var element in level) canvas.Children.Add(element.payload);
+            {
+                foreach (var element in level)
+                {
+                    canvas.Children.Add(element.payload);
+                    Canvas.SetTop(element.payload, element.YPosition);
+                }
+
+                double totalWidth = level.OfType<FrameworkElement>().Select(e => e.ActualWidth).Sum() + (level.Count - 1) * stepX;
+                double reservedForElement = totalWidth / level.Count;
+                double Half = totalWidth / 2;
+
+                for (int i = 0; i < level.Count; ++i) level[i].XPosition = reservedForElement * i - Half;
+                foreach (var element in level) Canvas.SetLeft(element.payload, element.XPosition);
+            }
         }
     }
 }
