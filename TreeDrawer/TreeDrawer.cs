@@ -76,15 +76,20 @@ namespace TreeDrawer
                 {
                     canvas.Children.Add(element.payload);
                     Canvas.SetTop(element.payload, element.YPosition);
+                    FrameworkElement fEl = element.payload as FrameworkElement;
+                    if (fEl != null) fEl.SizeChanged += (sender, e) => SetX(level);
                 }
-
-                double totalWidth = level.OfType<FrameworkElement>().Select(e => e.ActualWidth).Sum() + (level.Count - 1) * stepX;
-                double reservedForElement = totalWidth / level.Count;
-                double Half = totalWidth / 2;
-
-                for (int i = 0; i < level.Count; ++i) level[i].XPosition = reservedForElement * i - Half;
-                foreach (var element in level) Canvas.SetLeft(element.payload, element.XPosition);
             }
+        }
+
+        private void SetX(List<Node> level)
+        {
+            double totalWidth = level.Select(e => e.payload.DesiredSize.Width).Sum() + (level.Count - 1) * stepX;
+            double reservedForElement = totalWidth / (double)level.Count;
+            double Half = totalWidth / 2d;
+
+            for (int i = 0; i < level.Count; ++i) level[i].XPosition = reservedForElement * i - Half;
+            foreach (var element in level) Canvas.SetLeft(element.payload, element.XPosition);
         }
     }
 }
