@@ -18,6 +18,8 @@ namespace TreeDrawer
             public UIElement payload;
         }
 
+        public double stepY = 20;
+
         List<List<Node>> Levels = new List<List<Node>>();
 
         private Canvas canvas;

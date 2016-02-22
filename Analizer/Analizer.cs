@@ -23,9 +23,9 @@ namespace Analizer
 
         private Type SearchForType(string ClassName)
         {
-            Type res = assembleys.Select(a => a.GetType(ClassName)).First();
-            if (res == null) throw new ArgumentException("Class not found. Use valid Full Class name");
-            return res;
+            var res = assembleys.Select(a => a.GetType(ClassName)).Where(t => t != null).ToList();
+            if (res.Count==0) throw new ArgumentException("Class not found. Use valid Full Class name");
+            return res.First(); 
         }
 
         public Type GetRootForHierarhy(Type type)
