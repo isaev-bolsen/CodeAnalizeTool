@@ -20,6 +20,9 @@ namespace TreeDrawer
 
         public double stepY = 40;
         public double stepX = 100;
+
+        public double Width { get; private set; }
+
         List<List<Node>> Levels = new List<List<Node>>();
 
         private Canvas canvas;
@@ -77,19 +80,25 @@ namespace TreeDrawer
                     canvas.Children.Add(element.payload);
                     Canvas.SetTop(element.payload, element.YPosition);
                     FrameworkElement fEl = element.payload as FrameworkElement;
-                    if (fEl != null) fEl.SizeChanged += (sender, e) => SetX(level);
+                    if (fEl != null) fEl.SizeChanged += FEl_SizeChanged;
                 }
             }
+        }
+
+        private void FEl_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            foreach (var level in Levels) SetX(level);
         }
 
         private void SetX(List<Node> level)
         {
             double totalWidth = level.Select(e => e.payload.DesiredSize.Width).Sum() + (level.Count - 1) * stepX;
-            double reservedForElement = totalWidth / (double)level.Count;
-            double Half = totalWidth / 2d;
+            if (Width < totalWidth) Width = totalWidth;
+            double reservedForElement = Width / level.Count;
+            //double Half = Width / 2d;
 
-            for (int i = 0; i < level.Count; ++i) level[i].XPosition = reservedForElement * i - Half;
-            foreach (var element in level) Canvas.SetLeft(element.payload, element.XPosition);
+            for (int i = 0; i < level.Count; ++i) level[i].XPosition = reservedForElement * i;
+            foreach (var element in level) Canvas.SetLeft(element.payload, element.XPosition + stepX);
         }
     }
 }
