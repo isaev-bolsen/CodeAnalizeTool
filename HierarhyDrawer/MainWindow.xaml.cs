@@ -46,8 +46,17 @@ namespace HierarhyDrawer
 
         private void Draw(object sender, RoutedEventArgs e)
         {
+            Analizer.MyTypeInfo root;
             if (string.IsNullOrEmpty(ClassName.Text)) return;
-            Analizer.MyTypeInfo root = new Analizer.Analizer(Assembleys).GetHierarhy(ClassName.Text);
+
+            try
+            {
+                root = new Analizer.Analizer(Assembleys).GetHierarhy(ClassName.Text);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(this, exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
