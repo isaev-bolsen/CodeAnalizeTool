@@ -32,15 +32,15 @@ namespace HierarhyDrawer
 
         private void SelectAssembleys(object sender, RoutedEventArgs e)
         {
-            if (OpenFileDialog.ShowDialog().GetValueOrDefault(false)) 
+            if (OpenFileDialog.ShowDialog().GetValueOrDefault(false))
                 foreach (string filename in OpenFileDialog.FileNames)
                     try
                     {
                         Assembleys.Add(Assembly.LoadFile(filename));
                     }
-                    catch (BadImageFormatException exc)
+                    catch (BadImageFormatException)
                     {
-                        MessageBox.Show(this, exc.FileName + " is not a .Net assebly", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show(this, filename + " is not a .Net assebly", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
         }
 

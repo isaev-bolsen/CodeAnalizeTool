@@ -16,5 +16,12 @@ namespace AnalizerTests
         {
             Assert.AreSame(typeof(SimpleHierarhyRoot), new Analizer.Analizer(typeof(SimpleHierarhyChild).Assembly).GetRootForHierarhy("AnalizerTests.SimpleHierarhyChild"));
         }
+
+        [TestMethod]
+        [ExpectedException(typeof(System.ArgumentException))]
+        public void TrashRequest()
+        {
+            Assert.AreSame(typeof(SimpleHierarhyRoot), new Analizer.Analizer(typeof(SimpleHierarhyChild).Assembly).GetRootForHierarhy("Anild"));
+        }
     }
 }
