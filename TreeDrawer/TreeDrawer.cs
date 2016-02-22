@@ -86,6 +86,7 @@ namespace TreeDrawer
         private void SetX(object sender, RoutedEventArgs e)
         {
             Width = Levels.Select(level => level.Select(n => n.payload.DesiredSize.Width).Sum() + (level.Count - 1) * stepX).Max();
+            canvas.Width = Width;
             foreach (var level in Levels) SetX(level);
             canvas.UpdateLayout();
         }
@@ -93,7 +94,7 @@ namespace TreeDrawer
         private void SetX(List<Node> level)
         {
             for (int i = 0; i < level.Count; ++i) level[i].XPosition = Width / level.Count * (i + 0.5);
-            foreach (var element in level) Canvas.SetLeft(element.payload, element.XPosition);
+            foreach (var element in level) Canvas.SetLeft(element.payload, element.XPosition - element.payload.DesiredSize.Width / 2);
         }
     }
 }
