@@ -48,7 +48,7 @@ namespace HierarhyDrawer
         private void Draw(object sender, RoutedEventArgs e)
         {
             MyTypeInfo root;
-            if (string.IsNullOrEmpty(ClassName.Text)) return;
+            if (string.IsNullOrEmpty(ClassName.Text) || Assembleys.Count == 0) return;
 
             try
             {
@@ -65,13 +65,18 @@ namespace HierarhyDrawer
 
         private static UIElement GetClassRepresentation(MyTypeInfo typeInfo)
         {
-            var res = new TextBlock() { Text = typeInfo.Type.FullName };
+            var res = new TextBox() { Text = typeInfo.Type.FullName, IsReadOnly = true, Height = 25 };
             return res;
         }
 
         private static void Draw(MyTypeInfo root, Canvas canvas)
         {
             canvas.Children.Add(GetClassRepresentation(root));
+        }
+
+        private void ClassName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) Draw(sender, e);
         }
     }
 }

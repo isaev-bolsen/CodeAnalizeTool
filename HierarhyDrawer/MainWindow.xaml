@@ -10,7 +10,7 @@
         <ToolBar DockPanel.Dock="Top">
             <Button Click="SelectAssembleys">Select Asembleys</Button>
             <Button Click="Draw">Draw</Button>
-            <TextBox x:Name="ClassName" Width="100"/> 
+            <TextBox x:Name="ClassName" Width="100" LostFocus="Draw" KeyDown="ClassName_KeyDown"/> 
         </ToolBar>
         <Canvas x:Name="Canvas"/>
     </DockPanel>
