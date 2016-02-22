@@ -45,6 +45,11 @@ namespace HierarhyDrawer
                     }
         }
 
+        private void ClassName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) Draw(sender, e);
+        }
+
         private void Draw(object sender, RoutedEventArgs e)
         {
             MyTypeInfo root;
@@ -60,23 +65,25 @@ namespace HierarhyDrawer
                 return;
             }
 
-            Draw(root, Canvas);
+            Draw(root);
         }
 
         private static UIElement GetClassRepresentation(MyTypeInfo typeInfo)
         {
-            var res = new TextBox() { Text = typeInfo.Type.FullName, IsReadOnly = true, Height = 25 };
-            return res;
+            return new TextBox() { Text = typeInfo.Type.FullName, IsReadOnly = true, Height = 25 };
         }
 
-        private static void Draw(MyTypeInfo root, Canvas canvas)
+        private void Draw(MyTypeInfo root)
         {
-            canvas.Children.Add(GetClassRepresentation(root));
+            UIElement UIroot = GetClassRepresentation(root);
+            Canvas.Children.Add(UIroot);
+            Draw(UIroot, root.Children);
         }
 
-        private void ClassName_KeyDown(object sender, KeyEventArgs e)
+        private void Draw(UIElement Parent, IEnumerable<MyTypeInfo> Children)
         {
-            if (e.Key == Key.Enter) Draw(sender, e);
+            IEnumerable<UIElement> CildElemnts = Children.Select(N => GetClassRepresentation(N));
+
         }
     }
 }
