@@ -15,7 +15,6 @@ namespace Analizer
         }
 
         public Analizer(Assembly assembley) : this(new Assembly[] { assembley }) { }
-        public Analizer(params string[] safeFileNames) : this(safeFileNames.Select(fn => Assembly.LoadFrom(fn))) { }
 
         public Type GetRootForHierarhy(string ClassName)
         {

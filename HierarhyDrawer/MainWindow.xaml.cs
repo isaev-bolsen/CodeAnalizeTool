@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
 using Microsoft.Win32;
+using System.Reflection;
 
 namespace HierarhyDrawer
 {
@@ -22,8 +23,8 @@ namespace HierarhyDrawer
     /// </summary>
     public partial class MainWindow : Window
     {
-        private string[] Assembleys = new string[0];
-        private OpenFileDialog OpenFileDialog = new OpenFileDialog() { Multiselect = true, Filter = "C# assembleys|*.dll; *.exe", CheckFileExists = true };
+        private List<Assembly> Assembleys = new List<Assembly>();
+        private OpenFileDialog OpenFileDialog = new OpenFileDialog() { Multiselect = true, Filter = ".Net assembleys|*.dll; *.exe", CheckFileExists = true };
         public MainWindow()
         {
             InitializeComponent();
@@ -31,8 +32,22 @@ namespace HierarhyDrawer
 
         private void SelectAssembleys(object sender, RoutedEventArgs e)
         {
-            if (!OpenFileDialog.ShowDialog().GetValueOrDefault(false)) return;
-            else Assembleys = OpenFileDialog.FileNames;
+            if (OpenFileDialog.ShowDialog().GetValueOrDefault(false)) 
+                foreach (string filename in OpenFileDialog.FileNames)
+                    try
+                    {
+                        Assembleys.Add(Assembly.LoadFile(filename));
+                    }
+                    catch (BadImageFormatException exc)
+                    {
+                        MessageBox.Show(this, exc.FileName + " is not a .Net assebly", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+        }
+
+        private void Draw(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(ClassName.Text)) return;
+            Analizer.MyTypeInfo root = new Analizer.Analizer(Assembleys).GetHierarhy(ClassName.Text);
         }
     }
 }
