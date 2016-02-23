@@ -10,7 +10,8 @@
         <ToolBar DockPanel.Dock="Top">
             <Button Click="SelectAssembleys">Select Asembleys</Button>
             <Button Click="Draw">Draw</Button>
-            <TextBox x:Name="ClassName" MinWidth="100" LostFocus="Draw" KeyDown="ClassName_KeyDown"/> 
+            <TextBox x:Name="ClassName" MinWidth="100" LostFocus="Draw" KeyDown="ClassName_KeyDown"/>
+            <Button x:Name="SaveImageButton" >Save Image</Button>
         </ToolBar>
         <Viewbox x:Name="View" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True">
                 <Canvas x:Name="Canvas" Height="400" Width="400" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>

@@ -21,6 +21,7 @@ namespace HierarhyDrawer
         {
             InitializeComponent();
             Drawer = new Drawer(Canvas);
+            SaveImageButton.Click += new ImageFromWPF.ImageFromWPF(Canvas).SaveImage;
         }
 
         private void SelectAssembleys(object sender, RoutedEventArgs e)

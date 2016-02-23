@@ -101,6 +101,10 @@
       <Project>{e29c7ad8-bb86-442e-97d1-cb9e815ef4e5}</Project>
       <Name>Analizer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ImageFromWPF\ImageFromWPF.csproj">
+      <Project>{5ecadeb0-564a-4447-9bb0-7481a8cceff3}</Project>
+      <Name>ImageFromWPF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TreeDrawer\TreeDrawer.csproj">
       <Project>{fd680cf7-3fd4-468f-a43c-0da77c869f9c}</Project>
       <Name>TreeDrawer</Name>
