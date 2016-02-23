@@ -5,7 +5,7 @@ using System.Windows.Controls;
 
 namespace TreeDrawer
 {
-    public class TreeDrawer<T>
+    public abstract class TreeDrawer<T>
     {
         private class Node
         {
@@ -26,18 +26,12 @@ namespace TreeDrawer
         List<List<Node>> Levels = new List<List<Node>>();
 
         private Canvas canvas;
+        protected abstract IEnumerable<T> GetChildren(T elment);
+        protected abstract UIElement GetPayLoad(T element);
 
-        public delegate IEnumerable<T> GetChildren(T elment);
-        public delegate UIElement GetPayLoad(T element);
-
-        private GetChildren getChildren;
-        private GetPayLoad getPayLoad;
-
-        public TreeDrawer(Canvas canvas, GetChildren GetChildrenMethod, GetPayLoad GetPayLoadMethod)
+        public TreeDrawer(Canvas canvas)
         {
             this.canvas = canvas;
-            getChildren = GetChildrenMethod;
-            getPayLoad = GetPayLoadMethod;
         }
 
         public void Clear()
@@ -48,9 +42,9 @@ namespace TreeDrawer
 
         private IEnumerable<Node> CreateChildNodes(Node parent, int level)
         {
-            return getChildren(parent.element).Select(e =>
+            return GetChildren(parent.element).Select(e =>
             {
-                var childnode = new Node { element = e, Parent = parent, level = level, payload = getPayLoad(e), YPosition = level * stepY };
+                var childnode = new Node { element = e, Parent = parent, level = level, payload = GetPayLoad(e), YPosition = level * stepY };
                 parent.Children.Add(childnode);
                 return childnode;
             }).ToList();
@@ -65,7 +59,7 @@ namespace TreeDrawer
         {
             int currentLevel = 0;
             Clear();
-            Node RootNode = new Node() { element = root, payload = getPayLoad(root) };
+            Node RootNode = new Node() { element = root, payload = GetPayLoad(root) };
             Levels.Add(new List<Node> { RootNode });
             do
             {

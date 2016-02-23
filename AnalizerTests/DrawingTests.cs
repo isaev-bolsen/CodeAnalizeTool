@@ -9,12 +9,12 @@ namespace AnalizerTests
     /// Сводное описание для Drawing
     /// </summary>
     [TestClass]
-    public class Drawing
+    public class DrawingTests
     {
         Canvas canvas = new Canvas();
         Drawer drawer;
 
-        public Drawing()
+        public DrawingTests()
         {
             drawer = new Drawer(canvas);
         }

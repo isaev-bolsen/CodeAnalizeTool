@@ -55,7 +55,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Drawing.cs" />
+    <Compile Include="DrawingTests.cs" />
     <Compile Include="GetHierarhyTests.cs" />
     <Compile Include="MoreComplexHierarhy.cs" />
     <Compile Include="RootTests.cs" />
@@ -70,6 +70,10 @@
     <ProjectReference Include="..\HierarhyDrawer\HierarhyDrawer.csproj">
       <Project>{1bcf7dfb-2216-49c8-9b39-9fdd419fd476}</Project>
       <Name>HierarhyDrawer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TreeDrawer\TreeDrawer.csproj">
+      <Project>{fd680cf7-3fd4-468f-a43c-0da77c869f9c}</Project>
+      <Name>TreeDrawer</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

@@ -1,26 +1,22 @@
 ﻿using Analizer;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace HierarhyDrawer
 {
-    public class Drawer
+    public class Drawer : TreeDrawer.TreeDrawer<MyTypeInfo>
     {
-        private TreeDrawer.TreeDrawer<MyTypeInfo> treeDrawer;
-        public Drawer(Canvas canvas)
+        public Drawer(Canvas canvas) : base(canvas) { }
+
+        protected override UIElement GetPayLoad(MyTypeInfo element)
         {
-            treeDrawer = new TreeDrawer.TreeDrawer<MyTypeInfo>(canvas,TI=>TI.Children, GetNodeRepresentation);
+            return new TextBox() { Text = element.Type.FullName, IsReadOnly = true, Height = 25 };
         }
 
-        private static UIElement GetNodeRepresentation(MyTypeInfo typeInfo)
+        protected override IEnumerable<MyTypeInfo> GetChildren(MyTypeInfo elment)
         {
-            return new TextBox() { Text = typeInfo.Type.FullName, IsReadOnly = true, Height = 25 };
-        }
-
-        public void Draw(MyTypeInfo root)
-        {
-            treeDrawer.Clear();
-            treeDrawer.Draw(root);
+            return elment.Children;
         }
     }
 }
