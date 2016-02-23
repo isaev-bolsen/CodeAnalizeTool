@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace TreeDrawer
 {
@@ -15,7 +17,19 @@ namespace TreeDrawer
             public int level = 0;
             public double XPosition = 0;
             public double YPosition = 0;
-            public UIElement payload;
+            public FrameworkElement payload;
+            public Line Edge = new Line() { Stroke = Brushes.Black };
+
+            public void CorrectEdgeposition()
+            {
+                if (Parent == null) return; //root node
+                Canvas.SetLeft(Edge, XPosition);
+                Canvas.SetTop(Edge, YPosition);
+                Edge.X1 = 0;
+                Edge.Y1 = 0;
+                Edge.X2 = Parent.XPosition - XPosition;
+                Edge.Y2 = Parent.YPosition - YPosition + payload.DesiredSize.Height;
+            }
         }
 
         public double stepY = 50;
@@ -27,7 +41,7 @@ namespace TreeDrawer
 
         private Canvas canvas;
         protected abstract IEnumerable<T> GetChildren(T elment);
-        protected abstract UIElement GetPayLoad(T element);
+        protected abstract FrameworkElement GetPayLoad(T element);
 
         public TreeDrawer(Canvas canvas)
         {
@@ -71,18 +85,23 @@ namespace TreeDrawer
                 foreach (var element in level)
                 {
                     canvas.Children.Add(element.payload);
+                    canvas.Children.Add(element.Edge);
                     Canvas.SetTop(element.payload, element.YPosition);
-                    FrameworkElement fEl = element.payload as FrameworkElement;
-                    if (fEl != null) fEl.SizeChanged += SetX;
+                    element.payload.SizeChanged += CorrectPosition;
                 }
         }
 
-        private void SetX(object sender, RoutedEventArgs e)
+        private void CorrectPosition(object sender, RoutedEventArgs e)
         {
             Width = Levels.Select(level => level.Select(n => n.payload.DesiredSize.Width).Sum() + (level.Count - 1) * stepX).Max();
             canvas.Width = Width;
             foreach (var level in Levels) SetX(level);
-            canvas.UpdateLayout();
+            foreach (var level in Levels) DrawLinks(level);
+        }
+
+        private void DrawLinks(List<Node> level)
+        {
+            foreach (Node element in level) element.CorrectEdgeposition();
         }
 
         private void SetX(List<Node> level)

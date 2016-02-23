@@ -9,7 +9,7 @@ namespace HierarhyDrawer
     {
         public Drawer(Canvas canvas) : base(canvas) { }
 
-        protected override UIElement GetPayLoad(MyTypeInfo element)
+        protected override FrameworkElement GetPayLoad(MyTypeInfo element)
         {
             return new TextBox() { Text = element.Type.FullName, IsReadOnly = true, Height = 25 };
         }
