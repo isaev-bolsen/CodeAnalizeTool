@@ -13,7 +13,7 @@ namespace Analizer
         internal MyTypeInfo(Type Type, IEnumerable<Type> OtherTypes)
         {
             this.Type = Type;
-            Children = OtherTypes.Where(t => t.BaseType == Type).Select(t => new MyTypeInfo(t, this, OtherTypes));
+            Children = OtherTypes.Where(t => t.BaseType == Type).Select(t => new MyTypeInfo(t, this, OtherTypes)).ToArray();
         }
 
         private MyTypeInfo(Type Type, MyTypeInfo Parent, IEnumerable<Type> OtherTypes) : this(Type, OtherTypes)
