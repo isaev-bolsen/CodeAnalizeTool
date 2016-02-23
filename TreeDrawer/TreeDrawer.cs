@@ -96,7 +96,25 @@ namespace TreeDrawer
             Width = Levels.Select(level => level.Select(n => n.payload.DesiredSize.Width).Sum() + (level.Count - 1) * stepX).Max();
             canvas.Width = Width;
             foreach (var level in Levels) SetX(level);
+            SetY();
             foreach (var level in Levels) DrawLinks(level);
+        }
+
+        private void SetY()
+        {
+            double TotalHeight = stepY;
+
+            for (int i = 0; i < Levels.Count; ++i)
+            {
+                foreach (Node node in Levels[i]) node.YPosition = TotalHeight;
+                TotalHeight += Levels[i].Select(n => n.payload.DesiredSize.Height).Union(new double[] { stepY }).Max() + stepY;
+            }
+
+            foreach (var level in Levels)
+                foreach (var element in level)
+                    Canvas.SetTop(element.payload, element.YPosition);
+
+            canvas.Height = TotalHeight;
         }
 
         private void DrawLinks(List<Node> level)
