@@ -54,7 +54,7 @@ namespace HierarhyDrawer
             }
             catch (Exception exc)
             {
-                MessageBox.Show(this, exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(this, exc.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
