@@ -18,17 +18,22 @@ namespace ImageFromWPF
 
         public void SaveImage(object sender, RoutedEventArgs e)
         {
-            if ( dlg.ShowDialog().GetValueOrDefault(false))
-            {
-                RenderTargetBitmap Bitmap = new RenderTargetBitmap((int)element.ActualWidth * 4, (int)element.ActualHeight * 4, 386, 386, PixelFormats.Pbgra32);
-                Bitmap.Render(element);
-                PngBitmapEncoder encoder = new PngBitmapEncoder();
-                encoder.Interlace = PngInterlaceOption.On;
-                encoder.Frames.Add(BitmapFrame.Create(Bitmap));
-                var stream = new FileStream(dlg.FileName, FileMode.Create);
-                encoder.Save(stream);
-                stream.Close();
-            }
+            if (dlg.ShowDialog().GetValueOrDefault(false))
+                try
+                {
+                    RenderTargetBitmap Bitmap = new RenderTargetBitmap((int)element.ActualWidth * 4, (int)element.ActualHeight * 4, 386, 386, PixelFormats.Pbgra32);
+                    Bitmap.Render(element);
+                    PngBitmapEncoder encoder = new PngBitmapEncoder();
+                    encoder.Interlace = PngInterlaceOption.On;
+                    encoder.Frames.Add(BitmapFrame.Create(Bitmap));
+                    var stream = new FileStream(dlg.FileName, FileMode.Create);
+                    encoder.Save(stream);
+                    stream.Close();
+                }
+                catch (System.OutOfMemoryException exc)
+                {
+                    MessageBox.Show(exc.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
         }
     }
 }
