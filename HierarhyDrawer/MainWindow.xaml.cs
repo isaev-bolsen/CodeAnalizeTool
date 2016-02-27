@@ -60,5 +60,15 @@ namespace HierarhyDrawer
 
             Drawer.Draw(root);
         }
+
+        private void View_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                var pos = e.GetPosition(View);
+                View.ScrollToHorizontalOffset(pos.X);
+                View.ScrollToVerticalOffset(pos.Y);
+            }
+        }
     }
 }

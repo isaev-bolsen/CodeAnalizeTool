@@ -17,7 +17,7 @@
                       HorizontalAlignment="Stretch" 
                       VerticalAlignment="Stretch" 
                       ScrollViewer.HorizontalScrollBarVisibility="Visible" 
-                      ScrollViewer.CanContentScroll="True">
+                      ScrollViewer.CanContentScroll="True" MouseMove="View_MouseMove">
             <Canvas x:Name="Canvas" Height="10" Width="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </ScrollViewer>
     </DockPanel>
