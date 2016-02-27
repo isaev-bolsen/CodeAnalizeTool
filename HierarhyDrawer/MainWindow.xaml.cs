@@ -66,8 +66,8 @@ namespace HierarhyDrawer
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 var pos = e.GetPosition(View);
-                View.ScrollToHorizontalOffset(pos.X);
-                View.ScrollToVerticalOffset(pos.Y);
+                View.ScrollToHorizontalOffset(View.ScrollableWidth - pos.X);
+                View.ScrollToVerticalOffset(View.ScrollableHeight-pos.Y);
             }
         }
     }
