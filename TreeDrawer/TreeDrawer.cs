@@ -64,7 +64,7 @@ namespace TreeDrawer
             }).ToList();
         }
 
-        private List<Node> GetLevel(int PreviousLevel)
+        private List<Node> CreateLevel(int PreviousLevel)
         {
             return Levels[PreviousLevel].SelectMany(n => CreateChildNodes(n, PreviousLevel + 1)).ToList();
         }
@@ -77,7 +77,7 @@ namespace TreeDrawer
             Levels.Add(new List<Node> { RootNode });
             do
             {
-                Levels.Add(GetLevel(currentLevel));
+                Levels.Add(CreateLevel(currentLevel));
                 currentLevel++;
             } while (Levels[currentLevel].Count > 0);
 
@@ -100,6 +100,12 @@ namespace TreeDrawer
             foreach (var level in Levels) DrawLinks(level);
         }
 
+        private void SetX(List<Node> level)
+        {
+            for (int i = 0; i < level.Count; ++i) level[i].XPosition = Width / level.Count * (i + 0.5);
+            foreach (var element in level) Canvas.SetLeft(element.payload, element.XPosition - element.payload.DesiredSize.Width / 2);
+        }
+
         private void SetY()
         {
             double TotalHeight = stepY;
@@ -120,12 +126,6 @@ namespace TreeDrawer
         private void DrawLinks(List<Node> level)
         {
             foreach (Node element in level) element.CorrectEdgeposition();
-        }
-
-        private void SetX(List<Node> level)
-        {
-            for (int i = 0; i < level.Count; ++i) level[i].XPosition = Width / level.Count * (i + 0.5);
-            foreach (var element in level) Canvas.SetLeft(element.payload, element.XPosition - element.payload.DesiredSize.Width / 2);
         }
     }
 }
