@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
-
+using System.Linq;
 namespace HierarhyDrawer
 {
     /// <summary>
@@ -51,6 +51,11 @@ namespace HierarhyDrawer
             try
             {
                 root = new Analizer.Analizer(Assembleys).GetHierarhy(ClassName.Text);
+            }
+            catch (ReflectionTypeLoadException exc)
+            {
+                MessageBox.Show(this, string.Join(Environment.NewLine, exc.LoaderExceptions.Select(ex => ex.ToString())), "TypeLoadException", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
             catch (Exception exc)
             {
